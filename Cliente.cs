@@ -1,7 +1,19 @@
-﻿namespace P004;
-
+namespace ProvaIndividual;
 public class Cliente : Pessoa
 {
-    public string? EstadoCivil { get; set; }
-    public string? Profissao { get; set; }
+    protected bool _EstadoCivil;
+
+    protected string? _Profissao;
+
+    public bool EstadoCivil
+    {
+        get { return _EstadoCivil; }
+        set { _EstadoCivil = value; }
+    }
+
+    public string? Profissao
+    {
+        get { return _Profissao; }
+        set { _Profissao = value; }
+    }
 }
