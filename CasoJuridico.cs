@@ -11,3 +11,17 @@ public class CasoJuridico
     public List<Documento>? Documentos { get; set; }
     public List<CustoItem>? Custos { get; set; }
 }
+
+
+public void IniciarCaso(DateTime, float ProbabilidadeDeSucesso, Cliente cliente)   
+{
+    Abertura = dataAbertura;
+    ProbabilidadeSucesso = probabilidadeSucesso;
+    Cliente = cliente;
+    Status = "Em aberto";
+}
+
+public void AtualizarCaso(Datatime? dataEncerramento, List<Advogado> novos advogados, string novoStatus)
+{
+    
+}
