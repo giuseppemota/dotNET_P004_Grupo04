@@ -6,16 +6,8 @@ public class App
     {
         int opcaoMenu = -1;
         do {
-            Console.Clear();
-            Console.WriteLine("Menu");
-            Console.WriteLine("1 - Cadastro");
-            Console.WriteLine("2 - Atualização");
-            Console.WriteLine("3 - Consulta");
-            Console.WriteLine("4 - Relatórios");
-            Console.WriteLine("0 - Sair");
-            Console.Write("Opção: ");
             try {
-                opcaoMenu = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                opcaoMenu = App.ExibeMenu();
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
@@ -46,22 +38,8 @@ public class App
     {
         int opcaoRel = -1;
         do {
-            Console.Clear();
-            Console.WriteLine("Relatórios");
-            Console.WriteLine("1 - Advogados entre idades");
-            Console.WriteLine("2 - Clientes entre idades");
-            Console.WriteLine("3 - Clientes por estado civil");
-            Console.WriteLine("4 - Clientes em ordem alfabetica");
-            Console.WriteLine("5 - Clientes com profissao");
-            Console.WriteLine("6 - Advogados e Clientes aniversariantes do mês");
-            Console.WriteLine("7 - Casos abertos");
-            Console.WriteLine("8 - Advogados com mais casos concluidos");
-            Console.WriteLine("9 - Pesquisa da descrição de custo de caso");
-            Console.WriteLine("10 - Top 10 documentos");
-            Console.WriteLine("0 - Voltar");
-            Console.Write("Opção: ");
             try {
-                opcaoRel = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                opcaoRel = App.ExibeMenuRelatorio();
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
@@ -120,16 +98,8 @@ public class App
     {
         int opcaoRel = -1;
         do {
-            Console.Clear();
-            Console.WriteLine("Consulta");
-            Console.WriteLine("1 - Cliente");
-            Console.WriteLine("2 - Advogado");
-            Console.WriteLine("3 - Documento");
-            Console.WriteLine("4 - Caso Jurídico");
-            Console.WriteLine("0 - Voltar");
-            Console.Write("Opção: ");
             try {
-                opcaoRel = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                opcaoRel = App.ExibeMenuConsulta();
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
@@ -164,16 +134,8 @@ public class App
     {
         int opcaoAtt = -1;
         do {
-            Console.Clear();
-            Console.WriteLine("Atualização");
-            Console.WriteLine("1 - Cliente");
-            Console.WriteLine("2 - Advogado");
-            Console.WriteLine("3 - Documento");
-            Console.WriteLine("4 - Caso Jurídico");
-            Console.WriteLine("0 - Voltar");
-            Console.Write("Opção: ");
             try {
-                opcaoAtt = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                opcaoAtt = App.ExibeMenuAtualizacao();
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
@@ -208,16 +170,8 @@ public class App
     {
         int opcaoCad = -1;
         do {
-            Console.Clear();
-            Console.WriteLine("Cadastro");
-            Console.WriteLine("1 - Cliente");
-            Console.WriteLine("2 - Advogado");
-            Console.WriteLine("3 - Documento");
-            Console.WriteLine("4 - Caso Jurídico");
-            Console.WriteLine("0 - Voltar");
-            Console.Write("Opção: ");
             try {
-                opcaoCad = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                opcaoCad = App.ExibeMenuCadastro();
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
@@ -252,5 +206,75 @@ public class App
         Console.WriteLine("Pressione qualquer tecla para continuar...");
         Console.ReadKey();
     }
+
+    public static int ExibeMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("Menu Principal");
+        Console.WriteLine("1 - Cadastro");
+        Console.WriteLine("2 - Atualização");
+        Console.WriteLine("3 - Consulta");
+        Console.WriteLine("4 - Relatórios");
+        Console.WriteLine("0 - Sair");
+        Console.Write("Opção: ");
+        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+
+    }
+
+    public static int ExibeMenuRelatorio(){
+        Console.Clear();
+        Console.WriteLine("Relatórios");
+        Console.WriteLine("1 - Advogados entre idades");
+        Console.WriteLine("2 - Clientes entre idades");
+        Console.WriteLine("3 - Clientes por estado civil");
+        Console.WriteLine("4 - Clientes em ordem alfabetica");
+        Console.WriteLine("5 - Clientes com profissao");
+        Console.WriteLine("6 - Advogados e Clientes aniversariantes do mês");
+        Console.WriteLine("7 - Casos abertos");
+        Console.WriteLine("8 - Advogados com mais casos concluidos");
+        Console.WriteLine("9 - Pesquisa da descrição de custo de caso");
+        Console.WriteLine("10 - Top 10 documentos");
+        Console.WriteLine("0 - Voltar");
+        Console.Write("Opção: ");
+        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+    }
+
+    public static int ExibeMenuCadastro(){
+        Console.Clear();
+        Console.WriteLine("Cadastro");
+        Console.WriteLine("1 - Cliente");
+        Console.WriteLine("2 - Advogado");
+        Console.WriteLine("3 - Documento");
+        Console.WriteLine("4 - Caso Jurídico");
+        Console.WriteLine("0 - Voltar");
+        Console.Write("Opção: ");
+        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+    }
+
+    public static int ExibeMenuAtualizacao(){
+        Console.Clear();
+        Console.WriteLine("Atualização");
+        Console.WriteLine("1 - Cliente");
+        Console.WriteLine("2 - Advogado");
+        Console.WriteLine("3 - Documento");
+        Console.WriteLine("4 - Caso Jurídico");
+        Console.WriteLine("0 - Voltar");
+        Console.Write("Opção: ");
+        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+    }
+
+    public static int ExibeMenuConsulta(){
+        Console.Clear();
+        Console.WriteLine("Consulta");
+        Console.WriteLine("1 - Cliente");
+        Console.WriteLine("2 - Advogado");
+        Console.WriteLine("3 - Documento");
+        Console.WriteLine("4 - Caso Jurídico");
+        Console.WriteLine("0 - Voltar");
+        Console.Write("Opção: ");
+        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+    }
+
+
     // Class que vai implementar as telas, lógica e regras de negócio, menu etc.
 }
