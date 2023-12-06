@@ -1,0 +1,15 @@
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/bin/Debug/net7.0/AvCSharpGrupo
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/bin/Debug/net7.0/AvCSharpGrupo.deps.json
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/bin/Debug/net7.0/AvCSharpGrupo.runtimeconfig.json
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/bin/Debug/net7.0/AvCSharpGrupo.dll
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/bin/Debug/net7.0/AvCSharpGrupo.pdb
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/AvCSharpGrupo.csproj.AssemblyReference.cache
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/AvCSharpGrupo.GeneratedMSBuildEditorConfig.editorconfig
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/AvCSharpGrupo.AssemblyInfoInputs.cache
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/AvCSharpGrupo.AssemblyInfo.cs
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/AvCSharpGrupo.csproj.CoreCompileInputs.cache
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/AvCSharpGrupo.dll
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/refint/AvCSharpGrupo.dll
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/AvCSharpGrupo.pdb
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/AvCSharpGrupo.genruntimeconfig.cache
+/home/sergio/Documentos/dotNET_P004_Grupo04/AvCSharpGrupo/obj/Debug/net7.0/ref/AvCSharpGrupo.dll
