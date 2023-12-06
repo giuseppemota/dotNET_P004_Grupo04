@@ -661,8 +661,6 @@ public List<Advogado> AdvogadosComIdadeEntre(int idadeMinima, int idadeMaxima)
         return tiposDocumentos.Select(g => g.Key).ToList();
     }
 
-    // Outros membros da classe Escritorio
-
     private int CalcularIdade(DateTime dataNascimento)
     {
         return (int)((DateTime.Now - dataNascimento).Days / 365.25);
