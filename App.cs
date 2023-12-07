@@ -2,24 +2,23 @@
 
 public class App
 {
+    public static EscritorioAdvocacia escritorio = new EscritorioAdvocacia();
+
     public static void Menu()
     {
         int opcaoMenu = -1;
         do {
             try {
                 opcaoMenu = App.ExibeMenu();
-            } catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
             switch (opcaoMenu) {
                 case 1:
                     App.MenuCadastro();
                     break;
                 case 2:
-                    App.MenuAtualizacao();
+                    App.MenuConsulta();
                     break;
                 case 3:
-                    App.MenuConsulta();
+                    App.MenuAtualizacao();
                     break;
                 case 4:
                     App.MenuRelatorio();
@@ -30,6 +29,12 @@ public class App
                 default:
                     Console.WriteLine("Opção inválida");
                     break;
+            }
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+            if (opcaoMenu != 0) {
+                Pausar();
             }
         } while (opcaoMenu != 0);
     }
@@ -94,6 +99,34 @@ public class App
         } while (opcaoRel != 0);
     }
 
+    private static void MenuAtualizacao(){
+        int opcaoAtt = -1;
+        do {
+            try {
+                opcaoAtt = App.ExibeMenuAtualizacao();
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+            switch (opcaoAtt) {
+                case 1:
+                    App.AtualizarDocumento();
+                    break;
+                case 2:
+                    App.AtualizarCasoJuridico();
+                    break;
+                case 0:
+                    Console.WriteLine("Voltando...");
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida");
+                    break;
+            }
+            if (opcaoAtt != 0) {
+                Pausar();
+            }
+        } while (opcaoAtt != 0);
+    }
+
     private static void MenuConsulta()
     {
         int opcaoRel = -1;
@@ -105,20 +138,16 @@ public class App
             }
             switch (opcaoRel) {
                 case 1:
-                    Console.WriteLine("Consulta de Cliente");
-                    Pausar();
+                    App.ListarClientes();
                     break;
                 case 2:
-                    Console.WriteLine("Consulta de Advogado");
-                    Pausar();
+                    App.ListarAdvogados();
                     break;
                 case 3:
-                    Console.WriteLine("Consulta de Documento");
-                    Pausar();
+                    App.ListarDocumentos();
                     break;
                 case 4:
-                    Console.WriteLine("Consulta de Caso Jurídico");
-                    Pausar();
+                    App.ListarCasosJuridicos();
                     break;
                 case 0:
                     Console.WriteLine("Voltando...");
@@ -126,44 +155,11 @@ public class App
                 default:
                     Console.WriteLine("Opção inválida");
                     break;
+            }
+            if (opcaoRel != 0) {
+                Pausar();
             }
         } while (opcaoRel != 0);
-    }
-
-    private static void MenuAtualizacao()
-    {
-        int opcaoAtt = -1;
-        do {
-            try {
-                opcaoAtt = App.ExibeMenuAtualizacao();
-            } catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
-            switch (opcaoAtt) {
-                case 1:
-                    Console.WriteLine("Atualização de Cliente");
-                    Pausar();
-                    break;
-                case 2:
-                    Console.WriteLine("Atualização de Advogado");
-                    Pausar();
-                    break;
-                case 3:
-                    Console.WriteLine("Atualização de Documento");
-                    Pausar();
-                    break;
-                case 4:
-                    Console.WriteLine("Atualização de Caso Jurídico");
-                    Pausar();
-                    break;
-                case 0:
-                    Console.WriteLine("Voltando...");
-                    break;
-                default:
-                    Console.WriteLine("Opção inválida");
-                    break;
-            }
-        } while (opcaoAtt != 0);
     }
 
     private static void MenuCadastro()
@@ -177,20 +173,16 @@ public class App
             }
             switch (opcaoCad) {
                 case 1:
-                    Console.WriteLine("Cadastro de Cliente");
-                    Pausar();
+                    App.CadastroCliente();
                     break;
                 case 2:
-                    Console.WriteLine("Cadastro de Advogado");
-                    Pausar();
+                    App.CadastroAdvogado();
                     break;
                 case 3:
-                    Console.WriteLine("Cadastro de Documento");
-                    Pausar();
+                    App.CadastroDocumento();
                     break;
                 case 4:
-                    Console.WriteLine("Cadastro de Caso Jurídico");
-                    Pausar();
+                    App.CadastroCasoJuridico();
                     break;
                 case 0:
                     Console.WriteLine("Voltando...");
@@ -199,7 +191,83 @@ public class App
                     Console.WriteLine("Opção inválida");
                     break;
             }
+            if (opcaoCad != 0) {
+                Pausar();
+            }
         } while (opcaoCad != 0);
+    }
+
+    public static void MenuAttCaso(CasoJuridico casoJuridico) {
+        int opcaoAttCaso = -1;
+        Advogado? advogado;
+        do {
+            try {
+                opcaoAttCaso = App.ExibeMenuAttCaso(casoJuridico);
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+            switch (opcaoAttCaso) {
+                case 1:
+                    casoJuridico.Encerramento = DateTime.Now;
+                    casoJuridico.Status = "Encerrado";
+                    Console.WriteLine("Caso Encerrado");
+                    break;
+                case 2:
+                    casoJuridico.Encerramento = DateTime.Now;
+                    casoJuridico.Status = "Arquivado";
+                    Console.WriteLine("Caso Arquivado");
+                    break;
+                case 3:
+                    Console.WriteLine("Adicionar Advogado");
+                    Console.Write("CNA: ");
+                    string cna = Console.ReadLine() ?? throw new InvalidOperationException();
+                    advogado = escritorio.ProcurarAdvogado(cna);
+                    if (advogado == null){
+                        throw new Exception("Advogado não encontrado");
+                    }
+                    casoJuridico.Advogados.Add(advogado);
+                    break;
+                case 4:
+                    Console.WriteLine("Adicionar Documento");
+                    Console.Write("Código: ");
+                    string codigo = Console.ReadLine() ?? throw new InvalidOperationException();
+                    Documento? documento = escritorio.ProcurarDocumento(codigo);
+                    if (documento == null){
+                        throw new Exception("Documento não encontrado");
+                    }
+                    casoJuridico.Documentos.Add(documento);
+                    break;
+                case 5:
+                    Console.WriteLine("Adicionar Custo");
+                    Console.Write("Descrição: ");
+                    string descricao = Console.ReadLine() ?? throw new InvalidOperationException();
+                    Console.Write("Valor: ");
+                    float valor = float.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                    CustoItem custoItem = new CustoItem();
+                    custoItem.Descricao = descricao;
+                    custoItem.Custo = valor;
+                    casoJuridico.Custos.Add(custoItem);
+                    break;
+                case 6:
+                    Console.WriteLine("Mudar Probabilidade de Sucesso");
+                    Console.Write("Probabilidade de Sucesso: ");
+                    float probabilidadeDeSucesso = float.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                    if (probabilidadeDeSucesso < 0 || probabilidadeDeSucesso > 1){
+                        throw new Exception("Provabilidade de sucesso deve estar entre 0 e 1");
+                    }
+                    casoJuridico.ProbabilidadeDeSucesso = probabilidadeDeSucesso;
+                    break;
+                case 0:
+                    Console.WriteLine("Voltando...");
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida");
+                    break;
+            }
+            if (opcaoAttCaso != 0) {
+                Pausar();
+            }
+        } while (opcaoAttCaso != 0);
     }
 
     public static void Pausar(){
@@ -212,13 +280,12 @@ public class App
         Console.Clear();
         Console.WriteLine("Menu Principal");
         Console.WriteLine("1 - Cadastro");
-        Console.WriteLine("2 - Atualização");
-        Console.WriteLine("3 - Consulta");
-        Console.WriteLine("4 - Relatórios");
+        Console.WriteLine("2 - Consulta");
+        Console.WriteLine("3 - Atualização");
+        Console.WriteLine("3 - Relatórios");
         Console.WriteLine("0 - Sair");
         Console.Write("Opção: ");
         return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-
     }
 
     public static int ExibeMenuRelatorio(){
@@ -239,6 +306,30 @@ public class App
         return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
     }
 
+    public static int ExibeMenuAttCaso(CasoJuridico casoJuridico ){
+        Console.Clear();
+        Console.WriteLine("Atualização de Caso Jurídico de ID " + casoJuridico.ID);
+        Console.WriteLine("1 - Encerrar");
+        Console.WriteLine("2 - Arquivar");
+        Console.WriteLine("3 - Adicionar Advogado");
+        Console.WriteLine("4 - Adicionar Documento");
+        Console.WriteLine("5 - Adicionar Custo");
+        Console.WriteLine("6 - Mudar Probabilidade de Sucesso");
+        Console.WriteLine("0 - Voltar");
+        Console.Write("Opção: ");
+        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+    }
+
+    public static int ExibeMenuAtualizacao(){
+        Console.Clear();
+        Console.WriteLine("Atualização");
+        Console.WriteLine("1 - Documento");
+        Console.WriteLine("2 - Caso Jurídico");
+        Console.WriteLine("0 - Voltar");
+        Console.Write("Opção: ");
+        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+    }
+
     public static int ExibeMenuCadastro(){
         Console.Clear();
         Console.WriteLine("Cadastro");
@@ -250,19 +341,6 @@ public class App
         Console.Write("Opção: ");
         return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
     }
-
-    public static int ExibeMenuAtualizacao(){
-        Console.Clear();
-        Console.WriteLine("Atualização");
-        Console.WriteLine("1 - Cliente");
-        Console.WriteLine("2 - Advogado");
-        Console.WriteLine("3 - Documento");
-        Console.WriteLine("4 - Caso Jurídico");
-        Console.WriteLine("0 - Voltar");
-        Console.Write("Opção: ");
-        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-    }
-
     public static int ExibeMenuConsulta(){
         Console.Clear();
         Console.WriteLine("Consulta");
@@ -275,6 +353,231 @@ public class App
         return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
     }
 
+       public static void CadastroCliente()
+    {
+        string? nome;
+        string? cpf;
+        string? estadoCivil;
+        string? profissao;
+        Console.Clear();
+        Console.WriteLine("Cadastro de Cliente");
+        Console.Write("Nome: ");
+        if (string.IsNullOrEmpty(nome = Console.ReadLine()))
+        {
+            throw new Exception("Nome inválido!");
+        }
+        Console.Write("CPF: ");
 
-    // Class que vai implementar as telas, lógica e regras de negócio, menu etc.
+        if (string.IsNullOrEmpty(cpf = Console.ReadLine())){
+            throw new Exception("CPF inválido!");
+        }
+
+        if (cpf.Length != 11 || !cpf.All(char.IsDigit))
+        {
+            throw new Exception("CPF inválido!");
+        }
+
+        if (escritorio.Clientes.Any(cliente => cliente.CPF == cpf))
+        {
+            throw new Exception("CPF já cadastrado!");
+        }
+
+        Console.Write("Data de Nascimento: ");
+        DateTime dataNascimento = DateTime.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        
+        Console.Write("Estado Civil: ");
+        if (string.IsNullOrEmpty(estadoCivil = Console.ReadLine())){
+            throw new Exception("Estado civil vazio!");
+        }
+
+        Console.Write("Profissão: ");
+        if (string.IsNullOrEmpty(profissao = Console.ReadLine())){
+            throw new Exception("Profissão vazia!");
+        }
+        escritorio.AdicionarCliente(nome, cpf, dataNascimento, estadoCivil, profissao);
+        Console.WriteLine("Cliente cadastrado com sucesso!");
+    }
+
+    public static void CadastroAdvogado (){
+        string? nome;
+        string? cpf;
+        string? cna;
+        DateTime dataNascimento;
+        Console.Clear();
+        Console.WriteLine("Cadastro de Advogado");
+        Console.Write("Nome: ");
+        if (string.IsNullOrEmpty(nome = Console.ReadLine()))
+        {
+            throw new Exception("Nome inválido!");
+        }
+        Console.Write("CPF: ");
+
+        if (string.IsNullOrEmpty(cpf = Console.ReadLine())){
+            throw new Exception("CPF inválido!");
+        }
+
+        if (cpf.Length != 11 || !cpf.All(char.IsDigit))
+        {
+            throw new Exception("CPF inválido!");
+        }
+
+        if (escritorio.Advogados.Any(advogado => advogado.CPF == cpf))
+        {
+            throw new Exception("CPF já cadastrado!");
+        }
+
+        Console.Write("Data de Nascimento: ");
+        dataNascimento = DateTime.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+
+        Console.Write("CNA: ");
+        if (string.IsNullOrEmpty(cna = Console.ReadLine())){
+            throw new Exception("CNA vazio!");
+        }
+
+        if (escritorio.Advogados.Any(advogado => advogado.CNA == cna))
+        {
+            throw new Exception("CNA já cadastrado!");
+        }
+
+        escritorio.AdicionarAdvogado(nome, cpf, dataNascimento, cna);
+        Console.WriteLine("Advogado cadastrado com sucesso!");    }
+
+    public static void ListarClientes()
+    {
+        Console.Clear();
+        Console.WriteLine("Lista de Clientes");
+        escritorio.ListarClientes();
+    }
+
+    public static void ListarAdvogados()
+    {
+        Console.Clear();
+        Console.WriteLine("Lista de Advogados");
+        escritorio.ListarAdvogados();
+    }
+
+    public static void CadastroDocumento(){
+        string? descricao;
+        string? tipo;
+        string? codigo;
+        Console.Clear();
+        Console.WriteLine("Cadastro de Documento");
+        Console.Write("Descrição: ");
+        if (string.IsNullOrEmpty(descricao = Console.ReadLine()))
+        {
+            throw new Exception("Descrição inválida!");
+        }
+        Console.Write("Tipo: ");
+        if (string.IsNullOrEmpty(tipo = Console.ReadLine()))
+        {
+            throw new Exception("Tipo inválido!");
+        }
+        Console.Write("Código: ");
+        if (string.IsNullOrEmpty(codigo = Console.ReadLine()))
+        {
+            throw new Exception("Código inválido!");
+        }
+        escritorio.AdicionarDocumento(descricao, tipo, codigo);
+        Console.WriteLine("Documento cadastrado com sucesso!");
+    }
+
+    public static void ListarDocumentos()
+    {
+        Console.Clear();
+        Console.WriteLine("Lista de Documentos");
+        escritorio.ListarDocumentos();
+    }
+
+    public static void CadastroCasoJuridico(){
+        float probabilidadeDeSucesso;
+        Cliente? clienteDoCaso;
+        List<Advogado>? advogados;
+        List<Documento>? documentos;
+        Console.Clear();
+        Console.WriteLine("Iniciar um Caso Jurídico");
+        Console.Write("Probabilidade de Sucesso: ");
+        probabilidadeDeSucesso = float.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        if (probabilidadeDeSucesso < 0 || probabilidadeDeSucesso > 1){
+            throw new Exception("Provabilidade de sucesso deve estar entre 0 e 1");
+        }
+        Console.Write("Cliente do Caso (Cpf): ");
+        string cpf = Console.ReadLine() ?? throw new InvalidOperationException();
+        clienteDoCaso = escritorio.ProcurarCliente(cpf);
+        if (clienteDoCaso == null){
+            throw new Exception("Cliente não encontrado");
+        }
+        Console.Write("Advogados do Caso (cna): ");
+        Console.WriteLine("Digite o cna de cada advogado separado por espaço");
+        string cna = Console.ReadLine() ?? throw new InvalidOperationException();
+        string[] cnas = cna.Split(' ');
+        advogados = new List<Advogado>();
+        foreach (string cnaAdvogado in cnas){
+            Advogado? advogado = escritorio.ProcurarAdvogado(cnaAdvogado);
+            if (advogado == null){
+                throw new Exception("Advogado de Cna " + cnaAdvogado + " não encontrado");
+            }
+            advogados.Add(advogado);
+        }
+        Console.WriteLine("Deseja adicionar documentos ao caso? (s/n)");
+        string resposta = Console.ReadLine() ?? throw new InvalidOperationException();
+        if (resposta == "s")
+        {
+            Console.Write("Documentos do Caso (codigo): ");
+            Console.WriteLine("Digite o codigo de cada documento separado por espaço");
+            string codigo = Console.ReadLine() ?? throw new InvalidOperationException();
+            string[] codigos = codigo.Split(' ');
+            documentos = new List<Documento>();
+            foreach (string codigoDocumento in codigos)
+            {
+                Documento? documento = escritorio.ProcurarDocumento(codigoDocumento);
+                if (documento == null)
+                {
+                    throw new Exception("Documento de Codigo " + codigoDocumento + " não encontrado");
+                }
+                documentos.Add(documento);
+            }
+            escritorio.AdicionarCasoJuridico(probabilidadeDeSucesso, clienteDoCaso, advogados, documentos);
+        }
+        else
+        {
+            escritorio.AdicionarCasoJuridico(probabilidadeDeSucesso, clienteDoCaso, advogados, null);
+        }
+    }
+
+    public static void ListarCasosJuridicos()
+    {
+        Console.Clear();
+        Console.WriteLine("Lista de Casos Jurídicos");
+        escritorio.ListarCasosJuridicos();
+    }
+
+    public static void AtualizarDocumento(){
+        Console.Clear();
+        Console.WriteLine("Atualizar Documento");
+        Console.Write("Código: ");
+        string codigo = Console.ReadLine() ?? throw new InvalidOperationException();
+        Documento? documento = escritorio.ProcurarDocumento(codigo);
+        if (documento == null){
+            throw new Exception("Documento não encontrado");
+        }
+        Console.Write("Descrição: ");
+        string descricao = Console.ReadLine() ?? throw new InvalidOperationException();
+        Console.Write("Tipo: ");
+        string tipo = Console.ReadLine() ?? throw new InvalidOperationException();
+        documento.Descricao = descricao;
+        documento.Tipo = tipo;
+        documento.DataModificacao = DateTime.Now;     
+    }
+
+    public static void AtualizarCasoJuridico(){
+        Console.Clear();
+        Console.WriteLine("Atualizar Caso Jurídico");
+        Console.Write("ID: ");
+        int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        CasoJuridico? casoJuridico = escritorio.ProcurarCasoJuridico(id);
+        if (casoJuridico == null){
+            throw new Exception("Caso Jurídico não encontrado");
+        }
+        App.MenuAttCaso(casoJuridico);
+    }
 }
