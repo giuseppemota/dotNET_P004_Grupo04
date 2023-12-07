@@ -5,27 +5,30 @@ public class Cliente : Pessoa
 {
     public string? EstadoCivil { get; set; }
     public string? Profissao { get; set; }
-    public PlanoDeConsultoria? Plano {get; set;}
-     public List<IPagamento> pagamentos = new List<IPagamento>();
+    public PlanoDeConsultoria? Plano { get; set; }
+    public List<IPagamento> pagamentos = new List<IPagamento>();
 
-// Método para associar um plano ao cliente
-        public void AssociarPlano(PlanoDeConsultoria plano)
+    // Método para associar um plano ao cliente
+    public void AssociarPlano(PlanoDeConsultoria plano)
+    {
+        if (Plano == null)
         {
-            if (Plano == null)
-            {
-                Plano = plano;
-                Console.WriteLine($"Plano '{plano.Titulo}' associado ao cliente '{Nome}'.");
-            }
-            else
-            {
-                Console.WriteLine($"O cliente '{Nome}' já possui um plano associado.");
-            }
+            Plano = plano;
+            Console.WriteLine($"Plano '{plano.Titulo}' associado ao cliente '{Nome}'.");
         }
-
-            public void efetuarPagamento(IPagamento pagamento)
+        else
         {
-            pagamento.RealizarPagamento(this.Plano!.Mensalidade);
-            this.pagamentos.Add(pagamento);
+            Console.WriteLine($"O cliente '{Nome}' já possui um plano associado.");
         }
+    }
 
+    public void efetuarPagamento(IPagamento pagamento)
+    {
+        pagamento.RealizarPagamento(this.Plano!.Mensalidade);
+        this.pagamentos.Add(pagamento);
+    }
+    public void valorMensalidade()
+    {
+        Console.WriteLine(Plano!.Mensalidade);
+    }
 }
