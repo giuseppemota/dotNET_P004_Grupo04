@@ -101,7 +101,7 @@ class Program
                 case 21:
                     RelatorioTop10TiposDocumentosMaisInseridos();
                     break;
-                // ... (Código anterior)
+                
             }
         }
     }
