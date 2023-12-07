@@ -56,7 +56,7 @@ public class App
                     App.CadastroPlanoCliente();
                     break;
                 case 3:
-                    //App.RegistrarPagamentoMensal();
+                    App.RegistrarPagamentoMensal();
                     break;
                 case 0:
                     Console.WriteLine("Voltando...");
@@ -112,6 +112,59 @@ public class App
         cliente.AssociarPlano(plano);
 
         Console.WriteLine($"Plano '{plano.Titulo}' associado ao cliente '{cliente.Nome}'.");
+
+    }
+
+        private void RegistrarPagamentoMensal();
+    {
+        try
+        {
+            Console.WriteLine($"\n===== Realizando pagamento de plano de Consultoria =====\n");
+            for (int i = 0; i < pacientes.Count; i++)
+            {
+                Console.WriteLine($"\n{i}. {Cliente[i].Nome}");
+            }
+            Console.Write("Escolha o cliente: ");
+            if (int.TryParse(Console.ReadLine(), out int opcaoCliente))
+            {
+                if (opcaoCliente <= cliente.Count)
+                {
+                    Cliente cliente = cliente[opcaoCliente];
+
+                    Console.WriteLine("1. Cartão de crédito");
+                    Console.WriteLine("2. Boleto");
+                    Console.WriteLine("3. Dinheiro em espécie");
+                    Console.Write("Qual o método de pagamento? ");
+                    if (int.TryParse(Console.ReadLine(), out int opcaoPagamento))
+                    {
+                        if (opcaoPagamento == 1)
+                        {
+                            cliente.efetuarPagamento(cartaoCredito);
+                        }
+                        else if (opcaoPagamento == 2)
+                        {
+                            cliente.efetuarPagamento(boletoBancario);
+                        }
+                        else if (opcaoPagamento == 3)
+                        {
+                            cliente.efetuarPagamento(dinheiro);
+                        }
+                        else
+                        {
+                            Console.Write("Opção inválida!");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Paciente não existe na lista");
+                }
+            }
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Entrada inválida!");
+        }
     }
 
     private static int ExibeMenuPlanoConsultoria()
