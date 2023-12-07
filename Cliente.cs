@@ -8,7 +8,6 @@ public class Cliente : Pessoa
     public PlanoDeConsultoria? Plano {get; set;}
      public List<IPagamento> pagamentos = new List<IPagamento>();
 
-
 // Método para associar um plano ao cliente
         public void AssociarPlano(PlanoDeConsultoria plano)
         {

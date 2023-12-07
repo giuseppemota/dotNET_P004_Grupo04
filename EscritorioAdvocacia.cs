@@ -481,4 +481,9 @@ public class EscritorioAdvocacia
         PlanosDeConsultoria.Add(plano);
     }
 
+    internal PlanoDeConsultoria ProcurarPlanoPorTitulo(string tituloPlano)
+    {
+    return PlanosDeConsultoria.FirstOrDefault(plano => plano.Titulo.Equals(tituloPlano, StringComparison.OrdinalIgnoreCase));
+    }
+
 }
