@@ -1,10 +1,11 @@
 ﻿namespace P004;
 
 public class Cliente : Pessoa
+
 {
     public string? EstadoCivil { get; set; }
     public string? Profissao { get; set; }
-    public PlanoDeConsultoria? Plano {get; set}
+    public PlanoDeConsultoria? Plano {get; set;}
      public List<IPagamento> pagamentos = new List<IPagamento>();
 
 
@@ -21,4 +22,11 @@ public class Cliente : Pessoa
                 Console.WriteLine($"O cliente '{Nome}' já possui um plano associado.");
             }
         }
+
+            public void efetuarPagamento(IPagamento pagamento)
+        {
+            pagamento.RealizarPagamento(this.Plano!.Mensalidade);
+            this.pagamentos.Add(pagamento);
+        }
+
 }
