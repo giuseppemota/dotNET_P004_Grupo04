@@ -28,13 +28,11 @@ public class App
                     break;
                 default:
                     Console.WriteLine("Opção inválida");
+                    Pausar();
                     break;
             }
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
-            }
-            if (opcaoMenu != 0) {
-                Pausar();
             }
         } while (opcaoMenu != 0);
     }
@@ -45,49 +43,36 @@ public class App
         do {
             try {
                 opcaoRel = App.ExibeMenuRelatorio();
-            } catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
             switch (opcaoRel) {
                 case 1:
-                    Console.WriteLine("Advogados entre idades");
-                    Pausar();
+                    App.AdvogadoEntreIdades();
                     break;
                 case 2:
-                    Console.WriteLine("Clientes entre idades");
-                    Pausar();
+                    App.ClienteEntreIdades();
                     break;
                 case 3:
-                    Console.WriteLine("Clientes por estado civil");
-                    Pausar();
+                    App.ClientePorEstadoCivil();
                     break;
                 case 4:
-                    Console.WriteLine("Clientes em ordem alfabetica");
-                    Pausar();
+                    App.ClienteOrdemAlfabetica();
                     break;
                 case 5:
-                    Console.WriteLine("Clientes com profissao");
-                    Pausar();
+                    App.ClienteComProfissao();
                     break;
                 case 6:
-                    Console.WriteLine("Advogados e Clientes aniversariantes do mes");
-                    Pausar();
+                    App.AdvogadoClienteNiver();
                     break;
                 case 7:
-                    Console.WriteLine("Casos abertos");
-                    Pausar();
+                    App.CasosAbertos();
                     break;
                 case 8:
-                    Console.WriteLine("Advogados com mais casos concluidos");
-                    Pausar();
+                    App.AdvogadosMaisCasosConcluidos();
                     break;
                 case 9:
-                    Console.WriteLine("Pesquisa da descrição de custo de caso");
-                    Pausar();
+                    App.PesquisaDescricaoCustoCaso();
                     break;
                 case 10:
-                    Console.WriteLine("Top 10 documentos");
-                    Pausar();
+                    App.Top10Documentos();
                     break;
                 case 0:
                     Console.WriteLine("Voltando...");
@@ -95,6 +80,12 @@ public class App
                 default:
                     Console.WriteLine("Opção inválida");
                     break;
+            }
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+            if (opcaoRel != 0) {
+                Pausar();
             }
         } while (opcaoRel != 0);
     }
@@ -209,7 +200,7 @@ public class App
             switch (opcaoAttCaso) {
                 case 1:
                     casoJuridico.Encerramento = DateTime.Now;
-                    casoJuridico.Status = "Encerrado";
+                    casoJuridico.Status = "Concluído";
                     Console.WriteLine("Caso Encerrado");
                     break;
                 case 2:
@@ -226,6 +217,7 @@ public class App
                         throw new Exception("Advogado não encontrado");
                     }
                     casoJuridico.Advogados.Add(advogado);
+                    Console.WriteLine("Advogado adicionado com sucesso");
                     break;
                 case 4:
                     Console.WriteLine("Adicionar Documento");
@@ -236,6 +228,7 @@ public class App
                         throw new Exception("Documento não encontrado");
                     }
                     casoJuridico.Documentos.Add(documento);
+                    Console.WriteLine("Documento adicionado com sucesso");
                     break;
                 case 5:
                     Console.WriteLine("Adicionar Custo");
@@ -247,6 +240,7 @@ public class App
                     custoItem.Descricao = descricao;
                     custoItem.Custo = valor;
                     casoJuridico.Custos.Add(custoItem);
+                    Console.WriteLine("Custo adicionado com sucesso");
                     break;
                 case 6:
                     Console.WriteLine("Mudar Probabilidade de Sucesso");
@@ -256,6 +250,7 @@ public class App
                         throw new Exception("Provabilidade de sucesso deve estar entre 0 e 1");
                     }
                     casoJuridico.ProbabilidadeDeSucesso = probabilidadeDeSucesso;
+                    Console.WriteLine("Probabilidade de sucesso alterada com sucesso");
                     break;
                 case 0:
                     Console.WriteLine("Voltando...");
@@ -282,7 +277,7 @@ public class App
         Console.WriteLine("1 - Cadastro");
         Console.WriteLine("2 - Consulta");
         Console.WriteLine("3 - Atualização");
-        Console.WriteLine("3 - Relatórios");
+        Console.WriteLine("4 - Relatórios");
         Console.WriteLine("0 - Sair");
         Console.Write("Opção: ");
         return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -579,5 +574,121 @@ public class App
             throw new Exception("Caso Jurídico não encontrado");
         }
         App.MenuAttCaso(casoJuridico);
+    }
+
+    public static void AdvogadoEntreIdades(){
+        Console.Clear();
+        Console.WriteLine("Advogados entre idades");
+        Console.Write("Idade mínima: ");
+        int idadeMinima = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        Console.Write("Idade máxima: ");
+        int idadeMaxima = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        if (idadeMinima < 0 || idadeMaxima < 0 || idadeMinima > idadeMaxima){
+            throw new Exception("Idade inválida");
+        }
+        List<Advogado> advogados = escritorio.AdvogadoEntreIdades(idadeMinima, idadeMaxima);
+        foreach (Advogado advogado in advogados){
+            Console.WriteLine(advogado.Nome + " - " + advogado.Idade + " anos");
+        }
+    }
+
+    public static void ClienteEntreIdades(){
+        Console.Clear();
+        Console.WriteLine("Clientes entre idades");
+        Console.Write("Idade mínima: ");
+        int idadeMinima = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        Console.Write("Idade máxima: ");
+        int idadeMaxima = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        if (idadeMinima < 0 || idadeMaxima < 0 || idadeMinima > idadeMaxima){
+            throw new Exception("Idade inválida");
+        }
+        List<Cliente> clientes = escritorio.ClienteEntreIdades(idadeMinima, idadeMaxima);
+        foreach (Cliente cliente in clientes){
+            Console.WriteLine(cliente.Nome + " - " + cliente.Idade + " anos");
+        }
+    }
+
+    public static void ClientePorEstadoCivil(){
+        Console.Clear();
+        Console.WriteLine("Clientes por estado civil");
+        Console.Write("Estado civil: ");
+        string estadoCivil = Console.ReadLine() ?? throw new InvalidOperationException();
+        List<Cliente> clientes = escritorio.ClientePorEstadoCivil(estadoCivil);
+        foreach (Cliente cliente in clientes){
+            Console.WriteLine(cliente.Nome + " - " + cliente.EstadoCivil);
+        }
+    }
+
+    public static void ClienteOrdemAlfabetica(){
+        Console.Clear();
+        Console.WriteLine("Clientes em ordem alfabética");
+        List<Cliente> clientes = escritorio.ClienteOrdemAlfabetica();
+        foreach (Cliente cliente in clientes){
+            Console.WriteLine(cliente.Nome);
+        }
+    }
+
+    public static void ClienteComProfissao(){
+        Console.Clear();
+        Console.WriteLine("Clientes com profissão");
+        Console.Write("Profissão: ");
+        string profissao = Console.ReadLine() ?? throw new InvalidOperationException();
+        List<Cliente> clientes = escritorio.ClienteComProfissao(profissao);
+        foreach (Cliente cliente in clientes){
+            Console.WriteLine(cliente.Nome + " - " + cliente.Profissao);
+        }
+    }
+
+    public static void AdvogadoClienteNiver(){
+        Console.Clear();
+        Console.WriteLine("Advogados e Clientes aniversariantes do mês");
+        Console.Write("Mês: ");
+        int mes = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        if (mes < 1 || mes > 12){
+            throw new Exception("Mês inválido");
+        }
+
+        List<Advogado> advogados = escritorio.AdvogadoClienteNiver(mes);
+        foreach (Advogado advogado in advogados){
+            Console.WriteLine(advogado.Nome + " - " + advogado.DataNascimento.Day + "/" + advogado.DataNascimento.Month);
+        }
+    }
+
+    public static void CasosAbertos(){
+        Console.Clear();
+        Console.WriteLine("Casos abertos");
+        List<CasoJuridico> casos = escritorio.CasosAbertos();
+        foreach (CasoJuridico caso in casos){
+            Console.WriteLine(caso.ID + " - " + caso.ClienteDoCaso?.Nome + " - " + caso.Status);
+        }
+    }
+
+    public static void AdvogadosMaisCasosConcluidos(){
+        Console.Clear();
+        Console.WriteLine("Advogados com mais casos concluidos");
+        List<(Advogado,int)> advogados = escritorio.AdvogadosMaisCasosConcluidos();
+        foreach ((Advogado,int) advogado in advogados){
+            Console.WriteLine(advogado.Item1.Nome + " - " + advogado.Item2);
+        }
+    }
+
+    public static void PesquisaDescricaoCustoCaso(){
+        Console.Clear();
+        Console.WriteLine("Pesquisa da descrição de custo de caso");
+        Console.Write("Descrição: ");
+        string descricao = Console.ReadLine() ?? throw new InvalidOperationException();
+        List<CasoJuridico> casos = escritorio.PesquisaDescricaoCustoCaso(descricao);
+        foreach (CasoJuridico caso in casos){
+            Console.WriteLine(caso.ID + " - " + caso.ClienteDoCaso?.Nome + " - " + caso.Status);
+        }
+    }
+
+    public static void Top10Documentos(){
+        Console.Clear();
+        Console.WriteLine("Top 10 documentos");
+        List<Documento> documentos = escritorio.Top10Documentos();
+        foreach (Documento documento in documentos){
+            Console.WriteLine(documento.Codigo + " - " + documento.Descricao);
+        }
     }
 }

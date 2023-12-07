@@ -104,6 +104,18 @@ public class EscritorioAdvocacia
 
         casoJuridico1.Custos = new List<CustoItem> { custo1 };
         casoJuridico2.Custos = new List<CustoItem> { custo2 };
+
+        var casoJuridico3 = new CasoJuridico
+        {
+            Status = "Concluído",
+            ProbabilidadeDeSucesso = 0.5f,
+            ClienteDoCaso = cliente2,
+            Advogados = new List<Advogado> { advogado2 },
+            Documentos = new List<Documento> { documento2 },
+            Encerramento = DateTime.Now
+        };
+
+        CasosJuridicos.Add(casoJuridico3);
     }
 
     internal void AdicionarCliente(string nome, string cpf, DateTime dataNascimento, string estadoCivil, string profissao)
@@ -199,8 +211,8 @@ public class EscritorioAdvocacia
         return Clientes.FirstOrDefault(c => c.CPF == cpf);
     }
 
-    internal Advogado? ProcurarAdvogado(string cpf){
-        return Advogados.FirstOrDefault(a => a.CPF == cpf);
+    internal Advogado? ProcurarAdvogado(string cna){
+        return Advogados.FirstOrDefault(a => a.CNA == cna);
     }
 
     internal Documento? ProcurarDocumento(string codigo){
@@ -368,7 +380,75 @@ public class EscritorioAdvocacia
         }
     }
 
-    
+    internal List<Advogado> AdvogadoEntreIdades(int idadeMinima, int idadeMaxima)
+    {
+        return Advogados.Where(a => a.Idade >= idadeMinima && a.Idade <= idadeMaxima).ToList();
+    }
 
+    internal List<Cliente> ClienteEntreIdades(int idadeMinima, int idadeMaxima)
+    {
+        return Clientes.Where(c => c.Idade >= idadeMinima && c.Idade <= idadeMaxima).ToList();;
+    }
+
+    internal List<Cliente> ClientePorEstadoCivil(string estadoCivil)
+    {
+        estadoCivil = estadoCivil.ToLower();
+        return Clientes.Where(c => c.EstadoCivil.ToLower() == estadoCivil).ToList();;
+    }
+
+    internal List<Cliente> ClienteOrdemAlfabetica()
+    {
+        return Clientes.OrderBy(c => c.Nome).ToList();;
+    }
+
+    internal List<Cliente> ClienteComProfissao(string profissao)
+    {
+        return Clientes.Where(c => c.Profissao.ToLower().Contains(profissao.ToLower())).ToList();;
+    }
+
+    internal List<Advogado> AdvogadoClienteNiver(int mes)
+    {
+        return Advogados.Where(a => a.DataNascimento.Month == mes).ToList();;
+    }
+
+    internal List<CasoJuridico> CasosAbertos()
+    {
+        return CasosJuridicos.Where(c => c.Status == "Aberto").OrderBy(c => c.Abertura).ToList();;
+    }
+
+    internal List<(Advogado, int)> AdvogadosMaisCasosConcluidos()
+    {
+        var casosConcluidos = CasosJuridicos.Where(c => c.Status == "Concluído");
+
+        var advogadosComCasosConcluidos = casosConcluidos
+            .SelectMany(caso => caso.Advogados)
+            .GroupBy(advogado => advogado.CNA)
+            .Select(group => (group.First(), group.Count()))
+            .OrderByDescending(a => a.Item2)
+            .ToList();
+
+        return advogadosComCasosConcluidos;
+
+    }
+
+    internal List<CasoJuridico> PesquisaDescricaoCustoCaso(string descricao)
+    {
+        return CasosJuridicos.Where(c => c.Custos != null && c.Custos.Any(c => c.Descricao?.ToLower().Contains(descricao.ToLower()) ?? false)).ToList();
+    }
+
+    internal List<Documento> Top10Documentos()
+    {
+        var documentos = CasosJuridicos.SelectMany(c => c.Documentos);
+
+        var documentosMaisInseridos = documentos
+            .GroupBy(d => d.Codigo)
+            .Select(group => (group.First(), group.Count()))
+            .OrderByDescending(d => d.Item2)
+            .Take(10)
+            .Select(d => d.Item1)
+            .ToList();
+
+        return documentosMaisInseridos;
+    }
 
 }
