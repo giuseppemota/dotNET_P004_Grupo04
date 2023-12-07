@@ -120,6 +120,10 @@ public class EscritorioAdvocacia
 
     internal void AdicionarCliente(string nome, string cpf, DateTime dataNascimento, string estadoCivil, string profissao)
     {
+        if (Clientes.Any(c => c.CPF == cpf))
+        {
+            throw new Exception("CPF já cadastrado");
+        }
         var cliente = new Cliente
         {
             Nome = nome,
@@ -134,11 +138,19 @@ public class EscritorioAdvocacia
 
     internal void AdicionarCliente (Cliente cliente)
     {
+        if (Clientes.Any(c => c.CPF == cliente.CPF))
+        {
+            throw new Exception("CPF já cadastrado");
+        }
         Clientes.Add(cliente);
     }
 
     public void AdicionarAdvogado(string nome, string cpf, DateTime dataNascimento, string cna)
     {
+        if (Advogados.Any(a => a.CNA == cna))
+        {
+            throw new Exception("CNA já cadastrado");
+        }
         var advogado = new Advogado
         {
             Nome = nome,
@@ -152,6 +164,10 @@ public class EscritorioAdvocacia
 
     public void AdicionarAdvogado(Advogado advogado)
     {
+        if (Advogados.Any(a => a.CNA == advogado.CNA))
+        {
+            throw new Exception("CNA já cadastrado");
+        }
         Advogados.Add(advogado);
     }
 
@@ -184,6 +200,10 @@ public class EscritorioAdvocacia
 
     internal void AdicionarDocumento(string descricao, string tipo, string codigo)
     {
+        if (Documentos.Any(d => d.Codigo == codigo))
+        {
+            throw new Exception("Código já cadastrado");
+        }
         var documento = new Documento
         {
             DataModificacao = DateTime.Now,
@@ -244,6 +264,7 @@ public class EscritorioAdvocacia
             Console.WriteLine($"Cliente do Caso: {casoJuridico.ClienteDoCaso?.CPF}");
             Console.WriteLine($"Probabilidade de Sucesso: {casoJuridico.ProbabilidadeDeSucesso}");
             Console.WriteLine($"Status: {casoJuridico.Status}");
+            Console.WriteLine($"Custo Total:{casoJuridico.Custos?.Sum(c => c.Custo)}");
             Console.WriteLine();
             if (casoJuridico.Advogados != null){
                 Console.WriteLine();
