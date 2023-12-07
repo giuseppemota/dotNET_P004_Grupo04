@@ -1,4 +1,4 @@
-﻿namespace ProvaIndividual;
+﻿namespace P004;
 
 public class Documento
 {

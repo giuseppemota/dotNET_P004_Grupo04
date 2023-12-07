@@ -1,4 +1,4 @@
-﻿namespace ProvaIndividual;
+﻿namespace P004;
 
 public class CasoJuridico
 {
@@ -149,6 +149,26 @@ public class CasoJuridico
         this.Status = "encerrado";
         this.Encerramento = DateTime.Now;
         Console.WriteLine("Caso encerrado com sucesso!");
+    }
+
+    public static void MostrarCasosAbertos(List<CasoJuridico> casos)
+    {
+        foreach (var caso in casos)
+        {
+            if (caso.Status?.ToLower() == "aberto")
+            {
+                Console.WriteLine($"Caso iniciado em {caso.Abertura} para o cliente {caso.ClienteDoCaso?.Nome}");
+            }
+        }
+    }
+    public static void MostrarAdvogadosMaisConcluidos(List<Advogado> advogados)
+    {
+        var advogadosOrdenados = advogados.OrderByDescending(advogado => advogado.CasosConcluidos.Count);
+
+        foreach (var advogado in advogadosOrdenados)
+        {
+            Console.WriteLine($"{advogado.Nome}: {advogado.CasosConcluidos.Count} casos concluídos");
+        }
     }
 }
 

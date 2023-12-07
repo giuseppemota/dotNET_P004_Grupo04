@@ -1,4 +1,4 @@
-namespace ProvaIndividual;
+namespace P004;
 public abstract class Relatorio
 {
     public static void AdvogadoIdadeEntre(List<Advogado> advogados, int idadeMin, int idadeMax)
@@ -79,6 +79,24 @@ public abstract class Relatorio
         }
     }
 
+    public static int PedirInteiro(string mensagem)
+    {
+        while (true)
+        {
+            Console.Write(mensagem);
 
-
+            try
+            {
+                return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Por favor, insira um valor inteiro válido.");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("O valor inserido é muito grande ou muito pequeno.");
+            }
+        }
+    }
 }

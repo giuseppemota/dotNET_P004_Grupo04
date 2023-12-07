@@ -1,4 +1,4 @@
-namespace ProvaIndividual;
+namespace P004;
 public abstract class Pessoa
 {
 
@@ -7,7 +7,15 @@ public abstract class Pessoa
     protected string? _Nome;
     public string? Nome { get; set; }
 
+        public Pessoa(string? nome, string? cpf, DateTime dataNascimento)
+        {
+            Nome = nome;
+            Cpf = cpf;
+            DataNascimento = dataNascimento;
+        }
+
     public int Idade => DateTime.Now.Year - DataNascimento.Year;
+
     public string? Cpf
     {
         get {return _Cpf;}

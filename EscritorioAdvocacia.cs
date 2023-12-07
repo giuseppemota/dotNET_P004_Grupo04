@@ -1,4 +1,4 @@
-namespace ProvaIndividual;
+namespace P004;
 public class EscritorioAdvocacia
 {
     protected List<Advogado> advogados = new List<Advogado>();
@@ -20,54 +20,156 @@ public class EscritorioAdvocacia
         }
     }
 
-    public void AdicionarAdvogado(Advogado advogado)
+    public List<CasoJuridico> CasosJuridicos
     {
-        if (advogados.Exists(x => x.Cpf == advogado.Cpf || x.CNA == advogado.CNA))
+        get
         {
-            throw new Exception("Advogado ja existe");
-        }
-        else
-        {
-            advogados.Add(advogado);
+            return casosJuridicos;
         }
     }
 
-    public void AdicionarCliente(Cliente cliente)
+    public void AdicionarAdvogado()
     {
-        if (clientes.Exists(x => x.Cpf == cliente.Cpf))
+        try
         {
-            throw new Exception("Cliente ja existe");
+            Console.WriteLine("Informe o CPF do advogado: ");
+            string cpf = Console.ReadLine()!;
+
+            Console.WriteLine("Informe o nome do advogado: ");
+            string nome = Console.ReadLine()!;
+
+            Console.WriteLine("Informe a data de nascimento do advogado (Formato: dd/MM/yyyy): ");
+            DateTime dataNascimento = DateTime.Parse(Console.ReadLine()!);
+
+            Console.WriteLine("Informe o CNA do advogado: ");
+            string cna = Console.ReadLine()!;
+
+            Advogado novoAdvogado = new Advogado(nome, cpf, dataNascimento, cna);
+
+            if (advogados.Exists(x => x.Cpf == novoAdvogado.Cpf))
+            {
+                throw new Exception("Advogado já existe");
+            }
+            else
+            {
+                advogados.Add(novoAdvogado);
+                Console.WriteLine("Advogado adicionado com sucesso!");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            clientes.Add(cliente);
+            Console.WriteLine($"Erro ao adicionar advogado: {ex.Message}");
         }
     }
 
-    public void RemoverAdvogado(Advogado advogado)
-    {
-        if (advogados.Exists(x => x.Cpf == advogado.Cpf || x.CNA == advogado.CNA))
-        {
-            advogados.Remove(advogado);
-        }
-        else
-        {
-            throw new Exception("Advogado nao existe");
-        }
 
+    public void AdicionarCliente()
+    {
+        try
+        {
+            Console.WriteLine("Informe o CPF do cliente: ");
+            string? cpf = Console.ReadLine();
+
+            Console.WriteLine("Informe o nome do cliente: ");
+            string? nome = Console.ReadLine();
+
+            Console.WriteLine("Informe a data de nascimento do cliente (Formato: dd/MM/yyyy): ");
+            DateTime dataNascimento = DateTime.Parse(Console.ReadLine()!);
+
+            Console.WriteLine("Informe o estado civil do cliente (true para casado, false para solteiro): ");
+            bool estadoCivil = bool.Parse(Console.ReadLine()!);
+
+            Console.WriteLine("Informe a profissão do cliente: ");
+            string profissao = Console.ReadLine()!;
+
+            Cliente novoCliente = new Cliente(nome, cpf, dataNascimento, estadoCivil, profissao);
+
+            if (clientes.Exists(x => x.Cpf == novoCliente.Cpf))
+            {
+                throw new Exception("Cliente já existe");
+            }
+            else
+            {
+                clientes.Add(novoCliente);
+                Console.WriteLine("Cliente adicionado com sucesso!");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao adicionar cliente: {ex.Message}");
+        }
     }
 
-    public void RemoverCliente(Cliente cliente)
+
+    public void RemoverAdvogado()
     {
-        if (clientes.Exists(x => x.Cpf == cliente.Cpf))
+        try
         {
-            clientes.Remove(cliente);
+            Console.WriteLine("Informe o CPF do advogado que deseja remover: ");
+            string cpf = Console.ReadLine()!;
+
+            Advogado advogadoParaRemover = advogados.Find(x => x.Cpf == cpf)!;
+
+            if (advogadoParaRemover != null)
+            {
+                Console.WriteLine($"Tem certeza que deseja remover o advogado {advogadoParaRemover.Nome}? (s/n): ");
+                if (Console.ReadLine()?.ToLower() == "s")
+                {
+                    advogados.Remove(advogadoParaRemover);
+                    Console.WriteLine("Advogado removido com sucesso!");
+                }
+                else
+                {
+                    Console.WriteLine("Remoção cancelada pelo usuário.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Advogado não encontrado.");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception("Cliente nao existe");
+            Console.WriteLine($"Erro ao remover advogado: {ex.Message}");
         }
     }
+
+
+    public void RemoverCliente()
+    {
+        try
+        {
+            Console.WriteLine("Informe o CPF do cliente que deseja remover: ");
+            string cpf = Console.ReadLine()!;
+
+            Cliente? clienteParaRemover = clientes.Find(x => x.Cpf == cpf);
+
+            if (clienteParaRemover != null)
+            {
+                Console.WriteLine($"Tem certeza que deseja remover o cliente {clienteParaRemover.Nome}? (s/n): ");
+                if (Console.ReadLine()?.ToLower() == "s")
+                {
+                    clientes.Remove(clienteParaRemover);
+                    Console.WriteLine("Cliente removido com sucesso!");
+                }
+                else
+                {
+                    Console.WriteLine("Remoção cancelada pelo usuário.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Cliente não encontrado.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao remover cliente: {ex.Message}");
+        }
+    }
+
+
+
     public static string ObterStatus()
     {
         while (true)
@@ -171,4 +273,6 @@ public class EscritorioAdvocacia
             }
         }
     }
+
+    
 }

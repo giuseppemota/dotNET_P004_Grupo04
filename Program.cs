@@ -1,5 +1,5 @@
 ﻿// ProvaIndividual/Program.cs
-using ProvaIndividual;
+using P004;
 using System.Globalization;
 CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("pt-BR");
 
@@ -28,9 +28,9 @@ pedro.EstadoCivil = true;
 
 
 EscritorioAdvocacia escritorio = new EscritorioAdvocacia();
-escritorio.AdicionarAdvogado(giuseppe);
-escritorio.AdicionarCliente(henrique);
-escritorio.AdicionarCliente(pedro);
+escritorio.AdicionarAdvogado();
+escritorio.AdicionarCliente();
+escritorio.AdicionarCliente();
 //escritorio.RemoverAdvogado(giuseppe);
 //escritorio.RemoverCliente(henrique);
 
