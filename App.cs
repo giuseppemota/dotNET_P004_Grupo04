@@ -23,6 +23,9 @@ public class App
                 case 4:
                     App.MenuRelatorio();
                     break;
+                case 5:
+                    App.MenuPlanoConsultoria();
+                    break;
                 case 0:
                     Console.WriteLine("Saindo...");
                     break;
@@ -35,6 +38,52 @@ public class App
                 Console.WriteLine(e.Message);
             }
         } while (opcaoMenu != 0);
+    }
+
+    private static void MenuPlanoConsultoria(){
+        int opcaoMenu = -1;
+        // Cadastrar novo Plano
+        // Cadastrar plano para o Cliente
+        // Registrar Pagamento mensal
+        do {
+            try {
+                opcaoMenu = App.ExibeMenuPlanoConsultoria();
+            switch (opcaoMenu) {
+                case 1:
+                    //App.CadastroPlanoConsultoria();
+                    break;
+                case 2:
+                    //App.CadastroPlanoCliente();
+                    break;
+                case 3:
+                    //App.RegistrarPagamentoMensal();
+                    break;
+                case 0:
+                    Console.WriteLine("Voltando...");
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida");
+                    break;
+            }
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+            if (opcaoMenu != 0) {
+                Pausar();
+            }
+        } while (opcaoMenu != 0);
+    }
+
+    private static int ExibeMenuPlanoConsultoria()
+    {
+        Console.Clear();
+        Console.WriteLine("Plano de Consultoria");
+        Console.WriteLine("1 - Cadastrar novo Plano");
+        Console.WriteLine("2 - Cadastrar plano para o Cliente");
+        Console.WriteLine("3 - Registrar Pagamento Mensal");
+        Console.WriteLine("0 - Voltar");
+        Console.Write("Opção: ");
+        return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
     }
 
     private static void MenuRelatorio()
@@ -278,6 +327,7 @@ public class App
         Console.WriteLine("2 - Consulta");
         Console.WriteLine("3 - Atualização");
         Console.WriteLine("4 - Relatórios");
+        Console.WriteLine("5 - Plano Consultoria");
         Console.WriteLine("0 - Sair");
         Console.Write("Opção: ");
         return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
