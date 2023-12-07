@@ -1,5 +1,4 @@
-# # dotNET_P004_Grupo04
-# dotNet-equipe-t3
+# dotNet-equipe
 
 ## Membros da equipe:
 
