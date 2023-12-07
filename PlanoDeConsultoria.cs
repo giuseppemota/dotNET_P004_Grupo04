@@ -22,4 +22,5 @@ public class PlanoDeConsultoria
         mensalidade = _mensalidade;
         Beneficios = beneficios;
     }
+    
 }
