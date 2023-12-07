@@ -14,7 +14,6 @@ public class Cliente : Pessoa
             if (Plano == null)
             {
                 Plano = plano;
-                Console.WriteLine($"Plano '{plano.Titulo}' associado ao cliente '{Nome}'.");
             }
             else
             {

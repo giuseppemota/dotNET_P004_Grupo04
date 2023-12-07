@@ -42,9 +42,6 @@ public class App
 
     private static void MenuPlanoConsultoria(){
         int opcaoMenu = -1;
-        // Cadastrar novo Plano
-        // Cadastrar plano para o Cliente
-        // Registrar Pagamento mensal
         do {
             try {
                 opcaoMenu = App.ExibeMenuPlanoConsultoria();
@@ -115,57 +112,72 @@ public class App
 
     }
 
-        private void RegistrarPagamentoMensal();
+  public static void RegistrarPagamentoMensal()
+{
+    try
     {
-        try
-        {
-            Console.WriteLine($"\n===== Realizando pagamento de plano de Consultoria =====\n");
-            for (int i = 0; i < pacientes.Count; i++)
-            {
-                Console.WriteLine($"\n{i}. {Cliente[i].Nome}");
-            }
-            Console.Write("Escolha o cliente: ");
-            if (int.TryParse(Console.ReadLine(), out int opcaoCliente))
-            {
-                if (opcaoCliente <= cliente.Count)
-                {
-                    Cliente cliente = cliente[opcaoCliente];
+        Console.Clear();
+        Console.WriteLine("===== Realizando pagamento de plano de Consultoria =====\n");
 
-                    Console.WriteLine("1. Cartão de crédito");
-                    Console.WriteLine("2. Boleto");
-                    Console.WriteLine("3. Dinheiro em espécie");
-                    Console.Write("Qual o método de pagamento? ");
-                    if (int.TryParse(Console.ReadLine(), out int opcaoPagamento))
-                    {
-                        if (opcaoPagamento == 1)
-                        {
-                            cliente.efetuarPagamento(cartaoCredito);
-                        }
-                        else if (opcaoPagamento == 2)
-                        {
-                            cliente.efetuarPagamento(boletoBancario);
-                        }
-                        else if (opcaoPagamento == 3)
-                        {
-                            cliente.efetuarPagamento(dinheiro);
-                        }
-                        else
-                        {
-                            Console.Write("Opção inválida!");
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"Paciente não existe na lista");
-                }
-            }
-        }
-        catch (FormatException)
+        // Use foreach para iterar sobre os clientes
+        foreach (var cliente in escritorio.Clientes)
         {
-            Console.WriteLine("Entrada inválida!");
+            Console.WriteLine($"{escritorio.Clientes.IndexOf(cliente)}. {cliente.Nome}");
+        }
+
+        Console.Write("Escolha o cliente: ");
+
+        // Leia diretamente a opção do cliente
+        if (int.TryParse(Console.ReadLine(), out int opcaoCliente) && opcaoCliente < escritorio.Clientes.Count)
+        {
+            Cliente cliente = escritorio.Clientes[opcaoCliente];
+            Console.WriteLine($"{cliente.Nome}");
+
+            if (cliente.Plano == null)
+            {
+                throw new Exception("Cliente não possui plano");
+            }
+
+            ExibirOpcoesPagamento(cliente);
+        }
+        else
+        {
+            Console.WriteLine("Cliente não existe na lista");
         }
     }
+    catch (FormatException)
+    {
+        Console.WriteLine("Entrada inválida!");
+    }
+}
+
+private static void ExibirOpcoesPagamento(Cliente cliente)
+{
+    Console.WriteLine("1. Cartão de crédito");
+    Console.WriteLine("2. Boleto");
+    Console.WriteLine("3. Dinheiro em espécie");
+    Console.Write("Qual o método de pagamento? ");
+
+    // Leia diretamente a opção de pagamento
+    if (int.TryParse(Console.ReadLine(), out int opcaoPagamento))
+    {
+        switch (opcaoPagamento)
+        {
+            case 1:
+                cliente.efetuarPagamento(escritorio.CartaoCredito);
+                break;
+            case 2:
+                cliente.efetuarPagamento(escritorio.BoletoBancario);
+                break;
+            case 3:
+                cliente.efetuarPagamento(escritorio.Dinheiro);
+                break;
+            default:
+                Console.WriteLine("Opção inválida!");
+                break;
+        }
+    }
+}
 
     private static int ExibeMenuPlanoConsultoria()
     {

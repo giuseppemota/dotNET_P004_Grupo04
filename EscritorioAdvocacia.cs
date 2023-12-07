@@ -10,6 +10,12 @@ public class EscritorioAdvocacia
 
     public List<PlanoDeConsultoria> PlanosDeConsultoria { get; set; } = new();
 
+    public CartaoCredito CartaoCredito  {get; set; }  = new CartaoCredito();
+
+    public BoletoBancario BoletoBancario {get; set; }  = new BoletoBancario();
+
+    public Dinheiro Dinheiro {get; set; }  = new Dinheiro();
+
     public EscritorioAdvocacia()
     {
         var cliente1 = new Cliente
