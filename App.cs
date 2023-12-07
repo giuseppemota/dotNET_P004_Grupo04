@@ -50,7 +50,7 @@ public class App
                 opcaoMenu = App.ExibeMenuPlanoConsultoria();
             switch (opcaoMenu) {
                 case 1:
-                    //App.CadastroPlanoConsultoria();
+                    App.CadastroPlanoConsultoria();
                     break;
                 case 2:
                     //App.CadastroPlanoCliente();
@@ -740,5 +740,30 @@ public class App
         foreach (Documento documento in documentos){
             Console.WriteLine(documento.Codigo + " - " + documento.Descricao);
         }
+    }
+
+    private static void CadastroPlanoConsultoria()
+    {
+        Console.WriteLine("Cadastrando um novo Plano de Consultoria");
+        Console.Write("Título do plano de saúde: ");
+        string? titulo = Console.ReadLine() ?? throw new ArgumentNullException(nameof(titulo));
+
+        Console.Write("Mensalidade: ");
+        double mensalidade = double.Parse(Console.ReadLine() ?? throw new ArgumentNullException(nameof(mensalidade)));
+
+        Console.Write("Quantidade de benefícios: ");
+        int quantidadeBeneficios = int.Parse(Console.ReadLine() ?? throw new ArgumentNullException(nameof(quantidadeBeneficios)));
+    
+        List<string> beneficios = new List<string>();
+
+        for (int i = 0; i < quantidadeBeneficios; i++)
+        {
+            Console.Write("Benefício " + (i + 1) + ": ");
+            string? beneficio = Console.ReadLine() ?? throw new ArgumentNullException(nameof(beneficio));
+            beneficios.Add(beneficio);
+        }
+        
+        escritorio.AdicionarPlanoConsultoria(titulo, mensalidade, beneficios);
+        
     }
 }

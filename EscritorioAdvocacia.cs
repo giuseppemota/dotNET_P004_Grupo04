@@ -8,6 +8,8 @@ public class EscritorioAdvocacia
     public List<Documento> Documentos { get; set; } = new();
     public List<CasoJuridico> CasosJuridicos { get; set; } = new();
 
+    public List<PlanoDeConsultoria> PlanosDeConsultoria { get; set; } = new();
+
     public EscritorioAdvocacia()
     {
         var cliente1 = new Cliente
@@ -470,6 +472,13 @@ public class EscritorioAdvocacia
             .ToList();
 
         return documentosMaisInseridos;
+    }
+
+    internal void AdicionarPlanoConsultoria(string titulo, double mensalidade, List<string> beneficios)
+    {
+        var plano = new PlanoDeConsultoria(titulo, mensalidade, beneficios);
+
+        PlanosDeConsultoria.Add(plano);
     }
 
 }
