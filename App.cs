@@ -53,7 +53,7 @@ public class App
                     //App.CadastroPlanoConsultoria();
                     break;
                 case 2:
-                    //App.CadastroPlanoCliente();
+                    App.CadastroPlanoCliente();
                     break;
                 case 3:
                     //App.RegistrarPagamentoMensal();
@@ -72,6 +72,46 @@ public class App
                 Pausar();
             }
         } while (opcaoMenu != 0);
+    }
+
+    private static void CadastroPlanoCliente()
+    {
+    
+        Console.Clear();
+        Console.WriteLine("Cadastro de Plano para Cliente");
+
+        // Listar os clientes disponíveis
+        Console.WriteLine("Clientes Disponíveis:");
+        ListarClientes();
+
+        // Solicitar CPF do cliente
+        Console.Write("Informe o CPF do Cliente: ");
+        string cpfCliente = Console.ReadLine() ?? string.Empty;
+
+        // Verificar se o cliente existe
+        Cliente cliente = escritorio.ProcurarCliente(cpfCliente);
+        if (cliente == null)
+        {
+            Console.WriteLine($"Cliente com CPF {cpfCliente} não encontrado.");
+            return;
+        }
+
+        // Solicitar o título do plano
+        Console.Write("Informe o Título do Plano: ");
+        string tituloPlano = Console.ReadLine() ?? string.Empty;
+
+        // Verificar se o plano existe
+        PlanoDeConsultoria plano = escritorio.ProcurarPlanoPorTitulo(tituloPlano);
+        if (plano == null)
+        {
+            Console.WriteLine($"Plano com título {tituloPlano} não encontrado.");
+            return;
+        }
+
+        // Associar o plano ao cliente
+        cliente.AssociarPlano(plano);
+
+        Console.WriteLine($"Plano '{plano.Titulo}' associado ao cliente '{cliente.Nome}'.");
     }
 
     private static int ExibeMenuPlanoConsultoria()
