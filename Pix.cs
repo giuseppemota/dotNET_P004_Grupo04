@@ -1,6 +1,6 @@
 namespace P004;
 
-public class BoletoBancario : IPagamento
+public class Pix : IPagamento
 {
     public string? Descricao { get; set; }
     public double ValorBruto { get; set; }

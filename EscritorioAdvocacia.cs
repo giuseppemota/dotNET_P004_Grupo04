@@ -12,7 +12,7 @@ public class EscritorioAdvocacia
 
     public CartaoCredito CartaoCredito  {get; set; }  = new CartaoCredito();
 
-    public BoletoBancario BoletoBancario {get; set; }  = new BoletoBancario();
+    public Pix Pix {get; set; }  = new Pix();
 
     public Dinheiro Dinheiro {get; set; }  = new Dinheiro();
 

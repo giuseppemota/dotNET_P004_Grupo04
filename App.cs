@@ -154,7 +154,7 @@ public class App
 private static void ExibirOpcoesPagamento(Cliente cliente)
 {
     Console.WriteLine("1. Cartão de crédito");
-    Console.WriteLine("2. Boleto");
+    Console.WriteLine("2. Pix");
     Console.WriteLine("3. Dinheiro em espécie");
     Console.Write("Qual o método de pagamento? ");
 
@@ -167,7 +167,7 @@ private static void ExibirOpcoesPagamento(Cliente cliente)
                 cliente.efetuarPagamento(escritorio.CartaoCredito);
                 break;
             case 2:
-                cliente.efetuarPagamento(escritorio.BoletoBancario);
+                cliente.efetuarPagamento(escritorio.Pix);
                 break;
             case 3:
                 cliente.efetuarPagamento(escritorio.Dinheiro);
