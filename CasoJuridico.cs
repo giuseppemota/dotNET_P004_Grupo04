@@ -12,7 +12,7 @@ public class CasoJuridico
     public List<CustoItem>? Custos { get; set; }
 
 
-    public void criarCaso(List<CasoJuridico> casos, List<Cliente> clientes, List<Advogado> advogados)
+    public static void criarCaso(List<CasoJuridico> casos, List<Cliente> clientes, List<Advogado> advogados)
     {
 
         DateTime abertura = DateTime.Now;
@@ -40,7 +40,7 @@ public class CasoJuridico
         };
         System.Console.WriteLine("Escolha o advogado do caso: ");
         Advogado advogadoDoCaso = EscritorioAdvocacia.EscolherAdvogado(advogados);
-        this.Advogados?.Add(advogadoDoCaso);
+        advogados.Add(advogadoDoCaso);
 
 
 
@@ -48,7 +48,7 @@ public class CasoJuridico
         Console.WriteLine("Novo caso criado com sucesso!");
     }
 
-    public void AdicionarDocumento(List<CasoJuridico> casos)
+    public static void AdicionarDocumento(List<CasoJuridico> casos)
     {
         Console.WriteLine("Escolha o caso que deseja adicionar o documento: ");
         CasoJuridico caso = EscolherCaso(casos);
@@ -170,6 +170,8 @@ public class CasoJuridico
             Console.WriteLine($"{advogado.Nome}: {advogado.CasosConcluidos.Count} casos concluídos");
         }
     }
+
+
 }
 
 

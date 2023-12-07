@@ -268,14 +268,17 @@ public class App
                     break;
                 case 3:
                     Console.WriteLine("Cadastro de Documento");
+                    CasoJuridico.AdicionarDocumento(escritorio.CasosJuridicos);
                     Pausar();
                     break;
                 case 4:
                     Console.WriteLine("Cadastro de Caso Jurídico");
+                    CasoJuridico.criarCaso(escritorio.CasosJuridicos, escritorio.Clientes, escritorio.Advogados);
                     Pausar();
                     break;
                 case 0:
                     Console.WriteLine("Voltando...");
+                    App.Menu();
                     break;
                 default:
                     Console.WriteLine("Opção inválida");
