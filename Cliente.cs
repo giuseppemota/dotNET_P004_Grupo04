@@ -8,19 +8,18 @@ public class Cliente : Pessoa
     public PlanoDeConsultoria? Plano { get; set; }
     public List<IPagamento> pagamentos = new List<IPagamento>();
 
-    // Método para associar um plano ao cliente
-    public void AssociarPlano(PlanoDeConsultoria plano)
-    {
-        if (Plano == null)
+// Método para associar um plano ao cliente
+        public void AssociarPlano(PlanoDeConsultoria plano)
         {
-            Plano = plano;
-            Console.WriteLine($"Plano '{plano.Titulo}' associado ao cliente '{Nome}'.");
+            if (Plano == null)
+            {
+                Plano = plano;
+            }
+            else
+            {
+                Console.WriteLine($"O cliente '{Nome}' já possui um plano associado.");
+            }
         }
-        else
-        {
-            Console.WriteLine($"O cliente '{Nome}' já possui um plano associado.");
-        }
-    }
 
     public void efetuarPagamento(IPagamento pagamento)
     {
