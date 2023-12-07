@@ -1,52 +1,32 @@
-﻿namespace P004;
+namespace P004;
 
 public class Cliente : Pessoa
-    {
-        
-    public string? Nome { get; set; }
-    public DateTime DataNascimento { get; set; }
-    public string? CPF { get; set; }
 
-    public int Idade
-    {
-        get
+{
+    public string? EstadoCivil { get; set; }
+    public string? Profissao { get; set; }
+    public PlanoDeConsultoria? Plano {get; set;}
+     public List<IPagamento> pagamentos = new List<IPagamento>();
+
+
+// Método para associar um plano ao cliente
+        public void AssociarPlano(PlanoDeConsultoria plano)
         {
-            return (int)((DateTime.Now - DataNascimento).TotalDays / 365.25);
-        }
-    }
-        PlanoDeConsultoria? planoDeConsultoria;
-
-        public List<IPagamento> pagamentos = new List<IPagamento>();
-
-        public PlanoDeConsultoria planoDeConsultoria
-        {
-            get { return planoDeConsultoria; }
-            set { this.planoDeConsultoria = value; }
-        }
-
-        public List<IPagamento> Pagamentos
-        {
-            get { return pagamentos; }
-            set
+            if (Plano == null)
             {
-                foreach (IPagamento pagamento in value)
-                {
-                    this.pagamentos.Add(pagamento);
-                }
+                Plano = plano;
+                Console.WriteLine($"Plano '{plano.Titulo}' associado ao cliente '{Nome}'.");
+            }
+            else
+            {
+                Console.WriteLine($"O cliente '{Nome}' já possui um plano associado.");
             }
         }
 
-        public void efetuarPagamento(IPagamento pagamento)
+            public void efetuarPagamento(IPagamento pagamento)
         {
-            pagamento.RealizarPagamento(this.planoDeSaude!.Mensalidade);
+            pagamento.RealizarPagamento(this.Plano!.Mensalidade);
             this.pagamentos.Add(pagamento);
         }
 
-        public Paciente(string _nome, DateTime _dataDeNascimento, string _cpf, string _sexo, List<string> _sintomas, PlanoDeSaude? _plano) : base(_nome, _dataDeNascimento, _cpf)
-        {
-            sexo = _sexo;
-            sintomas = _sintomas;
-            PlanoDeSaude = _plano!;
-        }
-    }
 }
